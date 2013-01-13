@@ -1,6 +1,6 @@
 # PostLocation
 
-PostLocation is an iOS application that POSTs your location information to a server of your choosing.
+PostLocation is an iOS application that POSTs your location information to a server of your choosing.  Use it however you want- you control your data.
 
 ## Installation
 
@@ -18,7 +18,7 @@ There is some experimental push notification support.  It doesn't really do anyt
 
 2) Start up push notifications server
 
-  ruby push-notification-server.rb
+    ruby push-notification-server.rb
 
 3) Deploy app to iPhone (cannot be tested in simulator)
 
