@@ -1,5 +1,4 @@
 class AppDelegate
-
   attr_accessor :location_manager
   attr_accessor :device_token
 
@@ -62,7 +61,7 @@ class AppDelegate
   def location_manager
     if @locationManager.nil?
       @locationManager = CLLocationManager.alloc.init
-      @locationManager.setDesiredAccuracy(KCLLocationAccuracyKilometer) #KCLLocationAccuracyBest) #KCLLocationAccuracyKilometer
+      @locationManager.setDesiredAccuracy(KCLLocationAccuracyBest) #KCLLocationAccuracyBest) #KCLLocationAccuracyKilometer
       @locationManager.distanceFilter = 30
       @locationManager.delegate = self
     end
@@ -76,41 +75,39 @@ class AppDelegate
 
   # iOS >= 6
   def locationManager(manager, didUpdateLocations:locations)
-    # if App.shared.applicationState == UIApplicationStateBackground
-      withBackgroundHandling do
-        location = locations.last
-        
-        data = {
-          :latitude => location.coordinate.latitude,
-          :longitude => location.coordinate.longitude,
-          :timestamp => location.timestamp.timeIntervalSince1970,
-          :altitude => location.altitude,
-          :horizontal_accuracy => location.horizontalAccuracy,
-          :vertical_accuracy => location.verticalAccuracy,
-          :speed => location.speed,
-          :course => location.course,
-          :device_token => @device_token
-        }
-        
-        data_str = data.map {|k, v| "#{k}=#{v.to_s}" }.join("&")
+    withBackgroundHandling do
+      location = locations.last
+      
+      data = {
+        :latitude => location.coordinate.latitude,
+        :longitude => location.coordinate.longitude,
+        :timestamp => location.timestamp.timeIntervalSince1970,
+        :altitude => location.altitude,
+        :horizontal_accuracy => location.horizontalAccuracy,
+        :vertical_accuracy => location.verticalAccuracy,
+        :speed => location.speed,
+        :course => location.course,
+        :device_token => @device_token
+      }
+      
+      data_str = data.map {|k, v| "#{k}=#{v.to_s}" }.join("&")
 
-        url_string = ("#{@controller.url}").stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-        log "Sending to #{url_string} this data: #{data_str}"
+      url_string = ("#{@controller.url}").stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+      log "Sending to #{url_string} this data: #{data_str}"
 
-        url = NSURL.URLWithString(url_string)
+      url = NSURL.URLWithString(url_string)
 
-        request = NSMutableURLRequest.requestWithURL(url)
-        request.setHTTPMethod("POST")
-        request.setHTTPBody(data_str.to_s.dataUsingEncoding(NSUTF8StringEncoding))
+      request = NSMutableURLRequest.requestWithURL(url)
+      request.setHTTPMethod("POST")
+      request.setHTTPBody(data_str.to_s.dataUsingEncoding(NSUTF8StringEncoding))
 
-        response = nil
-        error = nil
-        data = NSURLConnection.sendSynchronousRequest(request, returningResponse: response, error: error)
-        raise "BOOM!" unless (error.nil?)
-        json = NSString.alloc.initWithData(data, encoding: NSUTF8StringEncoding)
-        log "Server response: #{json}"
-      end
-    # end
+      response = nil
+      error = nil
+      data = NSURLConnection.sendSynchronousRequest(request, returningResponse: response, error: error)
+      raise "BOOM!" unless (error.nil?)
+      json = NSString.alloc.initWithData(data, encoding: NSUTF8StringEncoding)
+      log "Server response: #{json}"
+    end
   end
   
   def withBackgroundHandling
