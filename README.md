@@ -1,3 +1,5 @@
+<img src="https://raw.github.com/cantino/post_location/master/doc/screen_shot.png" height=500 \>
+
 # PostLocation
 
 PostLocation is an iOS application that POSTs your location information to a server of your choosing.  Use it however you want- you control your data.
