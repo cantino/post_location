@@ -1,3 +1,5 @@
+# This project is no longer maintained.
+
 <img src="https://raw.github.com/cantino/post_location/master/doc/screen_shot.png" height=500 \>
 
 # PostLocation
