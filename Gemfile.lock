@@ -6,7 +6,7 @@ GEM
       xcodeproj (~> 0.1.0)
     grocer (0.2.0)
       json
-    json (1.7.5)
+    json (2.3.1)
     motion-cocoapods (1.0.3)
       cocoapods (>= 0.5.1)
     rack (1.4.1)
