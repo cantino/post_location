@@ -9,7 +9,7 @@ GEM
     json (1.7.5)
     motion-cocoapods (1.0.3)
       cocoapods (>= 0.5.1)
-    rack (1.4.1)
+    rack (1.6.13)
     rack-protection (1.2.0)
       rack
     rake (10.0.1)
